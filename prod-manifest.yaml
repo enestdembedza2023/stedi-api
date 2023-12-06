@@ -48,8 +48,7 @@ spec:
           livenessProbe:
             httpGet:
               path: /
-              port: 443
-              scheme: HTTPS 
+              port: 4567 
             initialDelaySeconds: 3
             periodSeconds: 3
 ---
@@ -63,7 +62,7 @@ spec:
   type: NodePort
   ports:
     - port: 443
-      targetPort: 443
+      targetPort: 4567
       protocol: TCP
 ---
 apiVersion: networking.k8s.io/v1
