@@ -54,7 +54,7 @@ spec:
 # The ports is a list of tcp ports the pod listens on
           ports:
 # ContainerPort is a specific port the pod listens on
-            - containerPort: 80
+            - containerPort: 443
 # Resources are the compute resources used by the pod in the cloud
           resources:
 # Limits represent the max amount of cpu and memory allowed for the pod           
@@ -76,7 +76,8 @@ spec:
 # Path defines the url to use when doing the HTTP request            
               path: /
 # Port defines the port to use when doing the HTTP request              
-              port: 4567
+              port: 443
+              scheme: HTTPS
 # initialDelaySeconds tells Kubernetes to wait before doing a request              
             initialDelaySeconds: 3
 # periodSeconds tells Kubernetes how often to check health            
@@ -91,5 +92,5 @@ spec:
     app: dev-stedi-enest
   type: LoadBalancer
   ports:
-    - port: 80
-      targetPort: 4567
+    - port: 443
+      targetPort: 443
