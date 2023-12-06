@@ -91,5 +91,5 @@ spec:
     app: dev-stedi-enest
   type: LoadBalancer
   ports:
-    - port: 443
+    - port: 80
       targetPort: 4567
