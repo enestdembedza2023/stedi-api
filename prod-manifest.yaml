@@ -16,8 +16,8 @@ spec:
     spec:
       containers:
         - name: prod-stedi-enest
-          image: gcr.io/cubs-consulting/stedi # Ensure this image refers to the correct Artifact registry repository
-		  env:
+          image: gcr.io/cubs-consulting/stedi # This image needs to refer to the NEW Artifact registry repositorry
+          env:
             - name: REDIS_PASSWORD
               valueFrom:
                 secretKeyRef:
@@ -36,8 +36,8 @@ spec:
                 secretKeyRef:
                   name: enest-twilio-dev
                   key: twilio_token
-				  ports:
-            - containerPort: 443 # The application inside the container should listen on this port for HTTPS traffic
+          ports:
+            - containerPort: 443
           resources:
             limits:
               cpu: ".5"
@@ -48,8 +48,8 @@ spec:
           livenessProbe:
             httpGet:
               path: /
-              port: 443 # Updated to the HTTPS port
-              scheme: HTTPS # Added scheme for HTTPS
+              port: 443
+              scheme: HTTPS 
             initialDelaySeconds: 3
             periodSeconds: 3
 ---
@@ -62,19 +62,18 @@ spec:
     app: prod-stedi-enest
   type: NodePort
   ports:
-    - port: 443 # Changed from 80 to 443 for HTTPS
-      targetPort: 443 # Should match the containerPort for HTTPS traffic
-      protocol: TCP # Explicitly define the protocol as TCP
+    - port: 443
+      targetPort: 443
+      protocol: TCP
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: prod-stedi-enest-ingress
   annotations:
-    kubernetes.io/ingress.global-static-ip-name: prod-stedi-enest-public # Ensure this IP has been created and is associated with the ingress
+    kubernetes.io/ingress.global-static-ip-name: prod-stedi-enest-public # This IP has not been created yet - need to create first
     networking.gke.io/managed-certificates: prod-stedi-enest-certificate
-    kubernetes.io/ingress.allow-http: "false" # Uncommented to force HTTPS by redirecting 
-	HTTP to HTTPS
+    kubernetes.io/ingress.allow-http: "false"
 spec:
   rules:
   - http:
@@ -83,14 +82,15 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: prod-stedi-enest-nodeport
+            name: prod-stedi-enest-nodeport # This needs to match line 53
             port:
-              number: 443 # Updated to the HTTPS port
+              number: 443
 ---
 apiVersion: networking.gke.io/v1
 kind: ManagedCertificate
 metadata:
-  name: prod-stedi-enest-certificate
+  name: prod-stedi-enest-certificate # This needs to match line 68
 spec:
   domains:
-    - enest.cit262.com # Ensure this domain is registered and pointing to the static IP
+    - enest.cit262.com # This is a DNS record that has not been created yet - we need to create that first
+    
