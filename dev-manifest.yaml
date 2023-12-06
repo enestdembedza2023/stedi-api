@@ -1,4 +1,4 @@
-#© 2021 Sean Murdock
+#© 2023 Enest Dembedza
 # this is a comment
 # this is the version of YAML we are using with the Kubernetes API
 apiVersion: apps/v1 
@@ -91,5 +91,5 @@ spec:
     app: dev-stedi-enest
   type: LoadBalancer
   ports:
-    - port: 80
+    - port: 443
       targetPort: 4567
