@@ -54,7 +54,7 @@ spec:
 # The ports is a list of tcp ports the pod listens on
           ports:
 # ContainerPort is a specific port the pod listens on
-            - containerPort: 443
+            - containerPort: 80
 # Resources are the compute resources used by the pod in the cloud
           resources:
 # Limits represent the max amount of cpu and memory allowed for the pod           
@@ -93,4 +93,4 @@ spec:
   type: LoadBalancer
   ports:
     - port: 443
-      targetPort: 443
+      targetPort: 4567
