@@ -76,8 +76,7 @@ spec:
 # Path defines the url to use when doing the HTTP request            
               path: /
 # Port defines the port to use when doing the HTTP request              
-              port: 443
-              scheme: HTTPS
+              port: 4567
 # initialDelaySeconds tells Kubernetes to wait before doing a request              
             initialDelaySeconds: 3
 # periodSeconds tells Kubernetes how often to check health            
@@ -92,5 +91,5 @@ spec:
     app: dev-stedi-enest
   type: LoadBalancer
   ports:
-    - port: 443
+    - port: 80
       targetPort: 4567
